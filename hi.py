@@ -2,7 +2,7 @@ import asyncio
 import csv
 import os
 import threading
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import deque
 
 from bleak import BleakClient
@@ -239,7 +239,7 @@ def get_live():
         "g": live_data.get("G"),
         "ldr": live_data.get("L"),
         "flex": live_data.get("F"),
-        "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z",
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z",
         "connected": connected,
     })
 
