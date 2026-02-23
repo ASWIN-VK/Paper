@@ -144,8 +144,8 @@ function App() {
       <FloatingElements />
       <div className="container">
         <Header onRefresh={handleRefresh} lastUpdate={lastUpdate} espConnected={espConnected} />
-        <LiveDataSection data={liveData} />
         <DropHistorySection peakEvents={peakEvents} loading={loading} />
+        <LiveDataSection data={liveData} />
         <GraphsSection liveData={liveData} />
         <RawDataSection rawData={rawData} />
       </div>
