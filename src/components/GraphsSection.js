@@ -66,7 +66,8 @@ const GraphsSection = ({ liveData }) => {
               dataKeys={['Roll', 'Pitch', 'Yaw']}
               colors={['#3b82f6', '#4da3e6', '#66b3f0']}
               maxDataPoints={100}
-              // Let Recharts auto-adjust the Y-axis based on incoming data
+              // Auto-zoom Y so even small changes go visibly up/down
+              yDomain={['dataMin - 0.5', 'dataMax + 0.5']}
             />
           )}
           
