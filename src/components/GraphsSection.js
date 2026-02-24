@@ -66,9 +66,7 @@ const GraphsSection = ({ liveData }) => {
               dataKeys={['Roll', 'Pitch', 'Yaw']}
               colors={['#3b82f6', '#4da3e6', '#66b3f0']}
               maxDataPoints={100}
-              // Fix Y-axis to a tight range so raw values cause big
-              // visible up/down movement without changing the numbers.
-              yDomain={[-5, 5]}
+              // Let Recharts auto-scale Y-axis based on the real values
             />
           )}
           

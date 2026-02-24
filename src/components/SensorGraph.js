@@ -5,6 +5,7 @@ import './SensorGraph.css';
 const SensorGraph = ({ data, title, dataKeys, colors, maxDataPoints = 50, yDomain = ['auto', 'auto'] }) => {
   const [chartData, setChartData] = useState([]);
   const dataIndexRef = useRef(0);
+  const baselineRef = useRef(null);
 
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
@@ -17,10 +18,27 @@ const SensorGraph = ({ data, title, dataKeys, colors, maxDataPoints = 50, yDomai
 
     if (!hasValidData) return;
 
-    const newDataPoint = {
-      index: dataIndexRef.current++,
-      ...data
-    };
+    // Establish a baseline (first valid values) so we plot
+    // differences relative to that baseline. This makes
+    // 200000 vs 200010 show as a visible delta of ~10.
+    if (!baselineRef.current) {
+      baselineRef.current = {};
+      dataKeys.forEach((key) => {
+        const v = parseFloat(data[key]);
+        baselineRef.current[key] = Number.isNaN(v) ? null : v;
+      });
+    }
+
+    const newDataPoint = { index: dataIndexRef.current++ };
+    dataKeys.forEach((key) => {
+      const raw = parseFloat(data[key]);
+      const base = baselineRef.current[key];
+      if (!Number.isNaN(raw) && base != null) {
+        newDataPoint[key] = raw - base;
+      } else {
+        newDataPoint[key] = null;
+      }
+    });
 
     setChartData(prev => {
       const updated = [...prev, newDataPoint];
