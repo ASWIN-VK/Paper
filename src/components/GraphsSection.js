@@ -3,11 +3,19 @@ import './GraphsSection.css';
 import SensorGraph from './SensorGraph';
 
 const GraphsSection = ({ liveData }) => {
-  // Helper to parse numeric values
+  // Helper to parse numeric values, preserving 0 as a valid value
   const parseValue = (val) => {
-    if (!val || val === 'None' || val === '' || val === 'N/A') return null;
+    if (
+      val === null ||
+      val === undefined ||
+      val === 'None' ||
+      val === '' ||
+      val === 'N/A'
+    ) {
+      return null;
+    }
     const parsed = parseFloat(val);
-    return isNaN(parsed) ? null : parsed;
+    return Number.isNaN(parsed) ? null : parsed;
   };
 
   // Prepare real data only
@@ -58,9 +66,7 @@ const GraphsSection = ({ liveData }) => {
               dataKeys={['Roll', 'Pitch', 'Yaw']}
               colors={['#3b82f6', '#4da3e6', '#66b3f0']}
               maxDataPoints={100}
-              // Dynamic Y range around the actual data so even small
-              // changes in roll/pitch/yaw create visible deflection.
-              yDomain={['dataMin - 2', 'dataMax + 2']}
+              // Let Recharts auto-adjust the Y-axis based on incoming data
             />
           )}
           
