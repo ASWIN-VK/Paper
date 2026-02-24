@@ -18,7 +18,7 @@ const GraphsSection = ({ liveData }) => {
     return Number.isNaN(parsed) ? null : parsed;
   };
 
-  // Prepare real data only
+  // Orientation data: use raw values from backend (no gain)
   const orientationData = {
     Roll: parseValue(liveData?.roll),
     Pitch: parseValue(liveData?.pitch),
@@ -66,8 +66,9 @@ const GraphsSection = ({ liveData }) => {
               dataKeys={['Roll', 'Pitch', 'Yaw']}
               colors={['#3b82f6', '#4da3e6', '#66b3f0']}
               maxDataPoints={100}
-              // Auto-zoom Y so even small changes go visibly up/down
-              yDomain={['dataMin - 0.5', 'dataMax + 0.5']}
+              // Fix Y-axis to a tight range so raw values cause big
+              // visible up/down movement without changing the numbers.
+              yDomain={[-5, 5]}
             />
           )}
           
