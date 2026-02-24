@@ -4,6 +4,8 @@ import AnimatedIcon from './AnimatedIcon';
 import DataVisualization from './DataVisualization';
 
 const LiveDataSection = ({ data }) => {
+  const ORIENTATION_GAIN = 3; // amplify small orientation changes visually
+
   const sensors = [
     { key: 'temp', label: 'Temperature', unit: '°C', icon: '🌡️' },
     { key: 'humidity', label: 'Humidity', unit: '%', icon: '💧' },
@@ -50,7 +52,11 @@ const LiveDataSection = ({ data }) => {
         ) : (
           <div className="sensor-grid">
             {sensors.map((sensor, index) => {
-              const value = getValue(sensor.key);
+              const rawValue = getValue(sensor.key);
+              const value =
+                rawValue != null && ['roll', 'pitch', 'yaw'].includes(sensor.key)
+                  ? rawValue * ORIENTATION_GAIN
+                  : rawValue;
               const isEmpty = value === null;
               
               return (
