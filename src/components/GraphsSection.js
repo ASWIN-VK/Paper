@@ -2,7 +2,7 @@ import React from 'react';
 import './GraphsSection.css';
 import SensorGraph from './SensorGraph';
 
-const ORIENTATION_GAIN = 3; // amplify small orientation changes
+const ORIENTATION_GAIN = 5; // amplify small orientation changes
 
 const GraphsSection = ({ liveData }) => {
   // Helper to parse numeric values
