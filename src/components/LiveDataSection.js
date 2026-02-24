@@ -4,7 +4,7 @@ import AnimatedIcon from './AnimatedIcon';
 import DataVisualization from './DataVisualization';
 
 const LiveDataSection = ({ data }) => {
-  const ORIENTATION_GAIN = 2000; // strongly amplify small orientation changes visually
+  const ORIENTATION_GAIN = 1; // show raw orientation values (no scaling)
 
   const sensors = [
     { key: 'temp', label: 'Temperature', unit: '°C', icon: '🌡️' },
