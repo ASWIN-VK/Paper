@@ -58,7 +58,9 @@ const GraphsSection = ({ liveData }) => {
               dataKeys={['Roll', 'Pitch', 'Yaw']}
               colors={['#3b82f6', '#4da3e6', '#66b3f0']}
               maxDataPoints={100}
-              yDomain={[-10, 10]}  // zoom in so small tilts are more visible
+              // Dynamic Y range around the actual data so even small
+              // changes in roll/pitch/yaw create visible deflection.
+              yDomain={['dataMin - 2', 'dataMax + 2']}
             />
           )}
           
