@@ -20,7 +20,6 @@ function App() {
   const [lastUpdate, setLastUpdate] = useState(null);
   const [espConnected, setEspConnected] = useState(false);
   const socketRef = useRef(null);
-  const lastLiveUpdateRef = useRef(0);
 
   const fetchData = async () => {
     try {
@@ -103,15 +102,10 @@ function App() {
 
     socket.on('live_data', (payload) => {
       if (payload && typeof payload === 'object') {
-        const now = Date.now();
-        // Throttle UI updates so the page does not visibly refresh too often
-        if (now - lastLiveUpdateRef.current >= 5000) {
-          lastLiveUpdateRef.current = now;
-          setLiveData((prev) => ({ ...prev, ...payload }));
-          setLastUpdate(new Date());
-          if (payload.connected === true) {
-            setEspConnected(true);
-          }
+        setLiveData((prev) => ({ ...prev, ...payload }));
+        setLastUpdate(new Date());
+        if (payload.connected === true) {
+          setEspConnected(true);
         }
       }
     });
