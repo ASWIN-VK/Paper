@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './SensorGraph.css';
 
-const SensorGraph = ({ data, title, dataKeys, colors, maxDataPoints = 50 }) => {
+const SensorGraph = ({ data, title, dataKeys, colors, maxDataPoints = 50, yDomain = ['auto', 'auto'] }) => {
   const [chartData, setChartData] = useState([]);
   const dataIndexRef = useRef(0);
 
@@ -97,7 +97,7 @@ const SensorGraph = ({ data, title, dataKeys, colors, maxDataPoints = 50 }) => {
             <YAxis 
               stroke="#737373"
               tick={{ fill: '#a3a3a3', fontSize: 12 }}
-              domain={['auto', 'auto']}
+              domain={yDomain}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 

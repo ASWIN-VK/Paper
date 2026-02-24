@@ -2,8 +2,6 @@ import React from 'react';
 import './GraphsSection.css';
 import SensorGraph from './SensorGraph';
 
-const ORIENTATION_GAIN = 2000; // strongly amplify small orientation changes
-
 const GraphsSection = ({ liveData }) => {
   // Helper to parse numeric values
   const parseValue = (val) => {
@@ -14,9 +12,9 @@ const GraphsSection = ({ liveData }) => {
 
   // Prepare real data only
   const orientationData = {
-    Roll: liveData?.roll != null ? parseValue(liveData.roll) * ORIENTATION_GAIN : null,
-    Pitch: liveData?.pitch != null ? parseValue(liveData.pitch) * ORIENTATION_GAIN : null,
-    Yaw: liveData?.yaw != null ? parseValue(liveData.yaw) * ORIENTATION_GAIN : null,
+    Roll: parseValue(liveData?.roll),
+    Pitch: parseValue(liveData?.pitch),
+    Yaw: parseValue(liveData?.yaw),
   };
 
   const sensorData = {
@@ -60,6 +58,7 @@ const GraphsSection = ({ liveData }) => {
               dataKeys={['Roll', 'Pitch', 'Yaw']}
               colors={['#3b82f6', '#4da3e6', '#66b3f0']}
               maxDataPoints={100}
+              yDomain={[-10, 10]}  // zoom in so small tilts are more visible
             />
           )}
           
