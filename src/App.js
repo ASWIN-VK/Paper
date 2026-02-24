@@ -75,9 +75,16 @@ function App() {
   };
 
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 2000);
-    return () => clearInterval(interval);
+    const hydrate = async () => {
+      try {
+  
+        await fetchData(); 
+        setLoading(false);
+      } catch (err) {
+        console.error("Initial hydration failed", err);
+      }
+    };
+    hydrate();
   }, []);
 
   useEffect(() => {
