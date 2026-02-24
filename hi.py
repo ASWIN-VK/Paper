@@ -96,7 +96,7 @@ def _emit_live():
         "g": live_data.get("G"),
         "ldr": live_data.get("L"),
         "flex": live_data.get("F"),
-        "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z",
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z",
         "connected": True,  # Receiving BLE data means ESP is connected
     }
     try:
