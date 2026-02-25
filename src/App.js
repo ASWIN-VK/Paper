@@ -88,7 +88,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const socket = io(API_BASE_URL, { transports: ['websocket', 'polling'] });
+    // Use HTTP long-polling only; Werkzeug dev server used in hi.py
+    // does not support native WebSockets, and WebSocket attempts
+    // cause 500 errors in the logs.
+    const socket = io(API_BASE_URL, { transports: ['polling'] });
     socketRef.current = socket;
 
     socket.on('connect', () => console.log('WebSocket connected'));
